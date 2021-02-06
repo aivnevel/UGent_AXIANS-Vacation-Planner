@@ -16,12 +16,9 @@
 ### Gebruikte IDE
 * Wij gebruikten IDEA Ultimate edition van IntelliJ met de sbt build tool.
 
-## Login gegevens
-* Axians heeft ons voorzien van een testomgeving met enkele logingegevens. Voor het testen van de applicatie hebben wij drie demo-accounts gemaakt. Er kan dus ingelogd worden met ofwel demo1, ofwel demo2, ofwel demo3. Deze hebben allen als wachtwoord 'vakantie'. 
-
 ## Software te bereiken via browser
 
-Het afgewerkte project is te bereiken via de UGent VPN en vervolgens naar bpvop5.ugent.be:8081 te surfen. Hierna kan worden ingelogd met de bovenstaande login-gegevens. Indien men zelf het project wil deployen met Docker, staan de stappen hieronder beschreven. Eerst wordt nog een korte uitleg gegeven hoe het project geïnstalleerd moet worden.
+Het afgewerkte project is te bereiken via de UGent VPN en vervolgens naar XXXXXXX te surfen. Hierna kan worden ingelogd met de bovenstaande login-gegevens. Indien men zelf het project wil deployen met Docker, staan de stappen hieronder beschreven. Eerst wordt nog een korte uitleg gegeven hoe het project geïnstalleerd moet worden.
 
 ## Installatie project
 
