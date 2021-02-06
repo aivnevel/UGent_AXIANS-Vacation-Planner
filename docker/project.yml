@@ -1,0 +1,40 @@
+version: "3"  # "3" if beta release (swarm mode)
+services:
+  # Apache httpd Container
+  mystaff-http:                      
+    build:
+      context: mystaff-http/
+      dockerfile: Dockerfile
+    ports:
+      - "8081:80"
+  # Java Play Container
+  mystaff-java:
+    build:
+      context: mystaff-java/
+      dockerfile: Dockerfile
+    depends_on:
+      - mystaff-mariadb
+    ports:
+      - "8082:9000"
+    environment:
+      - JAVA_OPTS=-Xms1G -Xmx2G -Xss4M
+  # MariaDB container
+  mystaff-mariadb:
+    container_name: mystaff-mariadb
+    build:
+      context: mystaff-mariadb/
+      dockerfile: Dockerfile
+    # ports:                            # Not allowed on production environment
+    #    - '3306:3306'
+    environment:
+       MYSQL_ROOT_PASSWORD: vakantie
+       MYSQL_USER: holidayMessage           # Please change this!
+       MYSQL_PASSWORD: vakantie       # Please change this!
+       MYSQL_DATABASE: iiidb           # Change if neccessary
+  # MongoDB container
+  mystaff-mongodb:
+    build:
+      context: mystaff-mongodb/
+      dockerfile: Dockerfile
+    #ports:
+    #  - '27017:27017'                 # Not allowed on production environment

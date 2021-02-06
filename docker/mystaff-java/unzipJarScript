@@ -1,0 +1,4 @@
+unzip -d src *-1.0-SNAPSHOT.zip
+mv src/*/* src/
+rm src/bin/*.bat
+mv src/bin/* src/bin/start

@@ -1,0 +1,14 @@
+<div class="basic">
+  <span class="text"><h1>{{_translate.instant('SETTINGS_SETTINGS')}}</h1></span>
+<div style="padding-left: 10px">
+  <div id="planner1" >
+    <mat-icon id="togglerequestFilters" class="settings" (click)="toggle('requestFilters')"></mat-icon><span class="text">{{_translate.instant('SETTINGS_REQUEST_FILTERS')}}</span>
+  </div>
+  <div><mat-icon id="toggleView" class="settings" (click)="toggle('View')"></mat-icon><span class="text">{{_translate.instant('SETTINGS_CALENDAR')}}</span></div>
+  <div id="planner2">
+    <mat-icon id="toggleMode" class="settings" (click)="toggle('Mode')"></mat-icon><span class="text">{{_translate.instant('SETTINGS_PLANNING_MODE')}}</span>
+  </div>
+  <hr/>
+<span class="text" style="cursor: pointer" (click)="toggle('Reset')">{{_translate.instant('SETTINGS_RECOVER_SETTINGS')}}</span>
+</div>
+</div>

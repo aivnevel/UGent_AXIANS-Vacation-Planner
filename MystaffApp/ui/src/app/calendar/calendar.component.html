@@ -1,0 +1,241 @@
+<ng-sidebar-container class="sidebar-container">
+
+  <ng-sidebar [autoFocus]="focused" [(opened)]="_opened" position="right" class="ng-sidebar--right md-content"
+              [mode]="'push'">
+    <app-eventform [start]="inputDate" [end]="outputDate" (absenceSubmitted)="addEvent($event)"
+                   [isCalendar]="true"></app-eventform>
+  </ng-sidebar>
+
+  <div ng-sidebar-content>
+    <ng-template #modalContent let-close="close">
+      <div>
+        <h3 class="popupheader">{{_translate.instant('POPUP_ABSENCE')}}</h3>
+      </div>
+      <div class="popuptext">
+        <p>{{_translate.instant('POPUP_REASON')}} {{ _translate.instant(modalData?.event.title) }}</p>
+        <p>{{_translate.instant('POPUP_START_DATE')}} {{ modalData?.event.s.getDate()}}
+          -{{modalData?.event.s.getMonth()}}-{{modalData?.event.s.getFullYear()}}</p>
+        <p>{{_translate.instant('POPUP_END_DATE')}} {{ modalData?.event.e.getDate()}}-{{modalData?.event.e.getMonth()}}
+          -{{modalData?.event.e.getFullYear()}}</p>
+        <p>{{_translate.instant('POPUP_FROM_TO_DAILY')}} -- {{modalData?.event.start.getHours()}}
+          :00/{{modalData?.event.end.getHours()}}:00</p>
+        <p>{{_translate.instant(('POPUP_STATUS'))}} {{_translate.instant(modalData?.event.state)}}</p>
+        <div class="popupinnertext">
+          <p>{{_translate.instant('POPUP_APPROVAL_STATUS')}} {{modalData?.event.approvedCount}}</p>
+          <p *ngFor="let comment of modalData?.event.comments">{{_translate.instant('COMMENT')}} {{comment}}</p>
+        </div>
+        <p>{{_translate.instant('POPUP_SELF_COMMENT')}} {{ modalData?.event.meta }}</p>
+      </div>
+    </ng-template>
+
+    <ng-template
+      #customCellTemplate
+      let-day="day"
+      let-openDay="openDay"
+      let-locale="locale"
+      let-tooltipPlacement="tooltipPlacement"
+      let-highlightDay="highlightDay"
+      let-unhighlightDay="unhighlightDay"
+      let-eventClicked="eventClicked"
+      let-tooltipTemplate="tooltipTemplate"
+      let-tooltipAppendToBody="tooltipAppendToBody">
+
+      <div class="cal-cell-top-custom" *ngIf="!checkTimeOfDay(day.events, 9) && !checkTimeOfDay(day.events, 0)">
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+      </div>
+      <div class="cal-cell-top-custom" *ngIf="!checkTimeOfDay(day.events, 9) && checkTimeOfDay(day.events, 0)">
+        <span class="cal-day-number"
+              style="color: cornflowerblue;">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+      </div>
+      <div class="cal-cell-top-custom" *ngIf="checkTimeOfDay(day.events, 9)" style="background-color: lightgray;">
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale}}</span>
+        <div class="cal-events" *ngIf="day.events.length > 0">
+          <ng-container *ngFor="let event of day.events;">
+            <div style="margin-top: 1.5em; margin-right: 0.2em" *ngIf="event.start.getHours() == 9">
+              <div
+                mwlCalendarTooltip="<b>id:</b> {{event.id}} <br>
+                    <b>{{_translate.instant('POPUP_REASON')}}</b> {{_translate.instant(event.title)}} <br>
+                    <b>{{_translate.instant('POPUP_STATUS')}}</b> {{_translate.instant(event.state)}} -- {{event.approvedCount}}<br>
+                    <b>{{_translate.instant('TOOLTIP_COMMENTS')}}</b> {{event.comments | json}}<br>
+                    <b>{{_translate.instant('TOOLTIP_FROM')}}</b> {{event.start.getHours()}}:00 <br>
+                    <b>{{_translate.instant('TOOLTIP_TO')}}</b> {{event.end.getHours()}}:00
+                    "
+                [tooltipPlacement]="tooltipPlacement"
+                [tooltipEvent]="event"
+                [tooltipAppendToBody]="tooltipAppendToBody"
+                [ngClass]="event.type">
+
+                {{event.symbol}}
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="cal-events-custom" *ngIf="!checkTimeOfDay2(day.events, 17)">
+
+      </div>
+      <div class="cal-events-custom" *ngIf="checkTimeOfDay2(day.events, 17)" style="background-color: lightgray;">
+        <ng-container style="margin-bottom: 1em;"
+                      *ngFor="let event of day.events;">
+          <div style="margin-left: 0.2em;" *ngIf="event.end.getHours() == 17">
+            <div
+              mwlCalendarTooltip="<b>id:</b> {{event.id}} <br>
+                    <b>{{_translate.instant('POPUP_REASON')}}</b> {{_translate.instant(event.title)}} <br>
+                    <b>{{_translate.instant('POPUP_STATUS')}}</b> {{_translate.instant(event.state)}} -- {{event.approvedCount}}<br>
+                    <b>{{_translate.instant('TOOLTIP_COMMENTS')}}</b> {{event.comments | json}}<br>
+                    <b>{{_translate.instant('TOOLTIP_FROM')}}</b> {{event.start.getHours()}}:00 <br>
+                    <b>{{_translate.instant('TOOLTIP_TO')}}</b> {{event.end.getHours()}}:00
+                    "
+              [tooltipPlacement]="tooltipPlacement"
+              [tooltipEvent]="event"
+              [tooltipTemplate]="tooltipTemplate"
+              [tooltipAppendToBody]="tooltipAppendToBody">
+              {{event.symbol}}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    </ng-template>
+
+    <div class="row text-center">
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="btn btn-primary button-header"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (click)="MonthClicked()"
+            (viewDateChange)="activeDayIsOpen = false"
+          >
+            {{_translate.instant('PREVIOUS')}}
+          </div>
+          <div
+            class="btn btn-outline-secondary button-header"
+            mwlCalendarToday
+            [(viewDate)]="viewDate"
+            (click)="MonthClicked()"
+          >
+            {{_translate.instant('TODAY')}}
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (click)="MonthClicked()"
+
+            (viewDateChange)="activeDayIsOpen = false"
+          >
+            {{_translate.instant('NEXT')}}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3 *ngIf=" view ===CalendarView.Month">{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}
+          - {{ viewSecondDate | calendarDate:(view + 'ViewTitle'):locale }}</h3>
+        <h3 *ngIf=" view !=CalendarView.Month">{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}</h3>
+      </div>
+
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="btn btn-primary button-header"
+            (click)="view = CalendarView.Month"
+            [class.active]="view === CalendarView.Month"
+          >
+            {{_translate.instant('MONTH')}}
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            (click)="view = CalendarView.Week"
+            [class.active]="view === CalendarView.Week"
+          >
+            {{_translate.instant('WEEK')}}
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            (click)="view = CalendarView.Day"
+            [class.active]="view === CalendarView.Day"
+          >
+            {{_translate.instant('DAY')}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+
+
+    <div [ngSwitch]="view" class="news">
+      <div class="wrapper">
+        <button class="btn btn-primary  submitEvent"
+                (click)="_toggleSidebarButton()">{{_translate.instant('PLAN_ABSENCE')}}</button>
+      </div>
+
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [locale]="locale"
+        [cellTemplate]="customCellTemplate"
+        [activeDayIsOpen]="activeDayIsOpen"
+        [weekStartsOn]="weekStartsOn"
+        [weekendDays]="weekendDays"
+        (eventClicked)="showEvent($event.event)"
+        (dayClicked)="dayClicked($event.day)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewSecondDate"
+        [events]="events"
+        [refresh]="refresh"
+        [locale]="locale"
+        [cellTemplate]="customCellTemplate"
+        [weekStartsOn]="weekStartsOn"
+        (eventClicked)="showEvent($event.event)"
+        [weekendDays]="weekendDays"
+        [activeDayIsOpen]="activeDayIsOpen2"
+        (dayClicked)="dayClicked2($event.day)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [tooltipTemplate]="empty"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [locale]="locale"
+        [weekStartsOn]="weekStartsOn"
+        [weekendDays]="weekendDays"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [tooltipTemplate]="empty"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [locale]="locale"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-day-view>
+    </div>
+    <br/>
+    <span class="updates"><mat-icon>list</mat-icon>
+      {{_translate.instant('HISTORY')}}</span>
+    <div class="history">
+      <app-history [rows]="rows" [table_titles]="table_titles" class="history_table"></app-history>
+    </div>
+  </div>
+
+  <ng-template #empty></ng-template>
+</ng-sidebar-container>
+
+

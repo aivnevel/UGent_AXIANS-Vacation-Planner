@@ -1,0 +1,93 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Serve index page from public directory
+
+GET           /refreshData                                                                                 controllers.TranslateController.refreshData
+GET           /me/absences                                                                                 controllers.AxiansController.getUserAbsences
+
+GET           /getOwnAbsenceTypes                                                                          controllers.FormatController.getOwnAbsenceTypes
+GET           /getAllHolidayMessagesShortOfEveryone                                                        controllers.FormatController.getAllHolidayMessagesShortOfEveryone
+GET           /getAllHolidayMessagesUnderPlannerWithId/*id                                                 controllers.FormatController.getAllHolidayMessagesUnderPlannerWithId(id: String)
+GET           /getAllHolidayMessagesPerPlanningUnit                                                        controllers.FormatController.getAllHolidayMessagesPerPlanningUnit(ids: java.util.List[String])
+GET           /getAllHMIDsPerPlanningUnitUnderPlannerWithID/*plannerID                                      controllers.FormatController.getAllHMIDsPerPlanningUnitUnderPlannerWithID(plannerID: String)
+GET           /getAllCollisionStatesUnderPlannerBetween/*id/*start/*end                                    controllers.FormatController.getAllCollisionStatesUnderPlannerBetween(id: String, start: String, end: String)
+GET           /getAllCollisionStatesUnderPlanningUnitBetween/*id/*start/*end                               controllers.FormatController.getAllCollisionStatesUnderPlanningUnitBetween(id: String, start: String, end: String)
+POST          /isPlanningStillPossibleForPlanningUnitsWithoutPeople/*start/*end                            controllers.FormatController.isPlanningStillPossibleForPlanningUnitsWithoutPeople(start: String, end: String, ids: java.util.List[String])
+
+# HolidayMessages from database
+GET           /getAllHolidayMessages                                                                       persistence.DatabaseController.getAllHolidayMessages
+GET           /getHolidayMessageWithEmployeeID/*id                                                         persistence.DatabaseController.getHolidayMessageWithEmployeeID(id: String)
+GET           /getHolidayMessageWithDatabaseID/*id                                                         persistence.DatabaseController.getHolidayMessageWithDatabaseID(id: Long)
+GET           /getHolidayMessagesNewOfDoctorWithID/*id                                                     persistence.DatabaseController.getHolidayMessageWithEmployeeID(id: String)
+GET           /getHolidayMessagesApprovedOfDoctorWithID/*id                                                persistence.DatabaseController.getHolidayMessagesApprovedOfDoctorWithID(id: String)
+GET           /getHolidayMessagesRejectedfDoctorWithID/*id                                                 persistence.DatabaseController.getHolidayMessagesRejectedOfDoctorWithID(id: String)
+GET           /getHolidayMessagesInConsiderationOfDoctorWithID/*id                                         persistence.DatabaseController.getHolidayMessagesInConsiderationOfDoctorWithID(id: String)
+GET           /getAllHolidayMessagesApproved                                                               persistence.DatabaseController.getAllHolidayMessagesApproved
+GET           /getAllHolidayMessagesRejected                                                               persistence.DatabaseController.getAllHolidayMessagesRejected
+GET           /getAllHolidayMessagesInConsideration                                                        persistence.DatabaseController.getAllHolidayMessagesInConsideration
+GET           /getAllHolidayMessagesNew                                                                    persistence.DatabaseController.getAllHolidayMessagesNew
+GET           /getAllHolidayMessagesNewOrInConsideration                                                   persistence.DatabaseController.getAllHolidayMessagesNewOrInConsideration
+GET           /getAllHolidayMessagesByType/*typeString                                                     persistence.DatabaseController.getAllHolidayMessagesByType(typeString: String)
+
+GET           /getAbsenceCounters/*year                                                                    persistence.DatabaseController.getAbsenceCounters(year: Int, employeeIDs: java.util.List[String])
+POST          /postAbsenceCounter                                                                          persistence.DatabaseController.postAbsenceCounter
+DELETE        /deleteAbsenceCounter/*id                                                                    persistence.DatabaseController.deleteAbsenceCounter(id: String)
+
+GET           /getNumberOfTimesPersonIsRejectedSince/*id/*date                                             persistence.DatabaseController.getNumberOfTimesPersonIsRejectedSince(id: String, date: String)
+
+# Translations
+GET           /getAllLocations                                                                             controllers.TranslateController.getAllLocations
+GET           /getAllSkills                                                                                controllers.TranslateController.getAllSkills
+GET           /getAllMemberNamesData                                                                       controllers.TranslateController.getAllMemberNamesData
+GET           /getAllPlanningUnits                                                                         controllers.TranslateController.getAllPlanningUnits
+GET           /getSkillById/*id                                                                            controllers.TranslateController.getSkillById(id: String)
+GET           /getLocationById/*id                                                                         controllers.TranslateController.getLocationById(id: String)
+GET           /getShortMemberNameDataOfId/*id                                                              controllers.TranslateController.getShortMemberNameDataOfId(id: String)
+GET           /getPlanningUnitOfId/*id                                                                     controllers.TranslateController.getPlanningUnitById(id:String)
+
+#Holidays
+GET           /getHolidayBetweenTwoDates/*start/*end                              controllers.HolidayController.getHolidayBetweenTwoDates(start: String, end: String)
+GET           /getDatesOfHoliday/*vacation/*date                                  controllers.HolidayController.getDatesOfHoliday(vacation: String, date: String)
+GET           /getVacationsOfYear/*year                                           controllers.HolidayController.getVacationsOfYear(year: Int)
+
+# PlanningUnitThings
+GET           /getAllPlanningUnitIDsInWhichEmployeeIDIsIn/*employeeID                                      controllers.PlanningUnitController.getAllPlanningUnitIDsInWhichEmployeeIDIsIn(employeeID: String)
+GET           /getAllPlanningUnitIDsOfWhichEmployeeIDIsPlanner/*employeeID                                 controllers.PlanningUnitController.getAllPlanningUnitIDsOfWhichEmployeeIDIsPlanner(employeeID: String)
+GET           /getAllPlanningUnitIDsInWhichEmployeeIDIsInWithPlannerFlag/*employeeID                       controllers.PlanningUnitController.getAllPlanningUnitIDsInWhichEmployeeIDIsInWithPlannerFlag(employeeID: String)
+#GET           /getScheduledDataForPlanningUnit/*id                                                         controllers.PlanningUnitController.getScheduledDataForPlanningUnit(id: String)
+GET           /getAvailablePeoplePerDayPartForPlanningUnits/*start/*end                                    controllers.PlanningUnitController.getAvailablePeoplePerDayPartForPlanningUnits(start: String, end:String, ids : java.util.List[String])
+GET           /getAllEmployeesOfPlanningUnitsWithIds                                                       controllers.PlanningUnitController.getAllEmployeesOfPlanningUnitsWithIds(ids: java.util.List[String])
+
+# Settings
+GET           /getSettingsFromEmployeeWithId/*employeeID                                                   persistence.DatabaseController.getSettingsFromEmployeeWithId(employeeID: String)
+POST          /postSettings                                                                                persistence.DatabaseController.postSettings
+DELETE        /deleteSettings/*employeeID                                                                  persistence.DatabaseController.deleteSettings(employeeID: String)
+
+
+# DATA RETRIEVERS
+GET           /api/user                                                                                    controllers.AxiansController.getUser
+GET           /api/members                                                                                 controllers.AxiansController.getMembers
+GET           /api/profilesettings                                                                         controllers.AxiansController.getProfileSettings
+GET           /api/organization                                                                            controllers.AxiansController.getOrganization
+GET           /api/plannings                                                                               controllers.AxiansController.getPlannings
+GET           /api/organizationtypes                                                                       controllers.AxiansController.getOrganizationTypes
+GET           /api/absencetypes                                                                            controllers.AxiansController.getAbsenceTypes
+GET           /api/holidays/:tenant                                                                        controllers.AxiansController.getOrganizationHolidays(tenant: String)
+GET           /api/planningUnits/:tenant                                                                   controllers.AxiansController.getPlanningUnits(tenant: String)
+GET           /api/planningUnit/:tenant/*id                                                                controllers.AxiansController.getPlanningUnit(tenant: String, id: String)
+GET           /api/planning/*id                                                                            controllers.AxiansController.getPlanning(id:String)
+# END DATA RETRIEVERS
+
+POST          /absences                                                                                    controllers.AxiansController.postUserAbsences
+POST          /login                                                                                       controllers.AxiansController.login
+
+POST          /holidayMessage                                                                              persistence.DatabaseController.postHolidayMessage()
+POST          /holidayPlanningsMessage                                                                     persistence.DatabaseController.postHolidayPlanningsMessage()
+POST          /holidayPlanningsMessageForPlanningsUnit/*unit                                               persistence.DatabaseController.postHolidayPlanningsMessageForPlanningsUnit(unit: String)
+
+
+
+DELETE        /:userId/absences/:absenceId                                                                 controllers.AxiansController.deleteUserAbsence(userId: String, absenceId: String)
+DELETE        /holidayMessage/*id                                                                          persistence.DatabaseController.deleteHolidayMessage(id: Long)

@@ -1,0 +1,6 @@
+{
+  "backend": {
+    "url": "http://bpvop5.ugent.be:",
+    "port": "8082"
+  }
+}

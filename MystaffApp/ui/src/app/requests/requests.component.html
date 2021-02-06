@@ -1,0 +1,65 @@
+<div class="blue">
+  <div *ngIf="comment == undefined" #commentInput id="floating_alternative" class="floating" cdkDrag><app-planner-comment [amount]="amount" (messageEvent)="receiveMessage($event)" >{{amount}}</app-planner-comment></div>
+<div class="name">
+  <span class="circle">{{id}}</span><input class="spacing-bewaar" id="test{{id}}" (click)="process()" style="margin-left: 1%;float: left;" value="test" type="submit"><mat-icon>{{formatType(type)}}</mat-icon><strong > {{fullname}}</strong><mat-icon (click)="clicked()" id="plus{{id}}" class="space">add_circle_outline</mat-icon>
+</div>
+  <div *ngIf="comment != undefined" #commentInput id="floating" class="floating" cdkDrag><app-planner-comment [amount]="amount" (messageEvent)="receiveMessage($event)">{{amount}}</app-planner-comment></div>
+  <div *ngIf="expanded">
+    <span>
+      <mat-icon>input</mat-icon>
+      <span> {{formatDay(requestDate)}}{{formatRequestDate(requestDate)}}</span>
+    </span>
+  </div>
+  <div>
+  <div>
+    <span>
+      <mat-icon class="icon-lower" >calendar_today</mat-icon>
+    </span>
+    <!--<span *ngIf="vacationName != '' "> {{vacationName}}: </span>-->
+    <span> {{formatDay(start)}}</span>
+    <span *ngIf="formatDate(start) != formatDate(last) "> {{_translate.instant('REQUEST_DATE_TO')}} {{formatDay(last)}}</span>
+    <span *ngIf="dayPart != 'entire day'" >, </span><strong *ngIf="dayPart != 'entire day' ">{{formatDayPart(dayPart)}}</strong>
+  </div>
+</div>
+
+<div>
+  <span>
+    <mat-icon>build</mat-icon>
+    {{setVisibleSkills(expanded)}}
+    <span> {{visible_skills}}</span>
+  </span>
+</div>
+
+<div>
+  <span>
+    <mat-icon>navigation</mat-icon>
+    <span> {{setLocations(locations)}}</span>
+  </span>
+</div>
+
+<div *ngIf="comment != undefined ">
+  <span>
+    <mat-icon>mode_comment</mat-icon>
+    {{setVisibleComment(expanded)}}
+    <span> {{visible_comment}}</span>
+  </span>
+</div>
+
+  <div *ngIf="isCollision">
+    <span>
+      <mat-icon>report_problem</mat-icon>
+      <span> {{_translate.instant('REQUESTS_CONFLICT_WITH_ID')}} {{collisions}}</span>
+    </span>
+  </div>
+
+<hr/>
+  <div class="name_bottom">
+<span *ngIf="!isAlwaysCollision && !isAcceptedAndSometimesCollision" class="no-space" style="cursor: pointer" (click)="clickedAccept()" >{{_translate.instant('REQUESTS_ACCEPT')}}</span>
+<span *ngIf="isAlwaysCollision && !isAcceptedAndSometimesCollision"  class="no-space"><s>{{_translate.instant('REQUESTS_ACCEPT')}}</s></span>
+<span *ngIf="!isAcceptedAndSometimesCollision && InConsideration" style="border: dashed; border-width: thin;" class="options" (click)="clickedWait()" > {{_translate.instant('REQUESTS_AWAIT')}} </span>
+    <span *ngIf="!isAcceptedAndSometimesCollision && !InConsideration"  class="options" (click)="clickedWait()" > {{_translate.instant('REQUESTS_AWAIT')}} </span>
+<span *ngIf="isAcceptedAndSometimesCollision" class="options" style="color:green"><b>{{_translate.instant('REQUESTS_ACCEPTED')}}!</b></span>
+<span *ngIf="!isAcceptedAndSometimesCollision" class="space" (click)="clickedRefuse()" >{{_translate.instant('REQUESTS_REJECT')}}</span>
+    </div>
+</div>
+

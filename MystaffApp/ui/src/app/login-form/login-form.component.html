@@ -1,0 +1,21 @@
+<div>
+  <div class="all">
+    <form id="form" class="form-horizontal" #loginComponentForm="ngForm">
+      <fieldset>
+        <div class="form-group">
+          <input id="username" [(ngModel)]="username" placeholder="{{_translate.instant('USERNAME')}}"
+                 name="username" [required]="true">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="{{_translate.instant('PASSWORD')}}"
+                 id="password" [(ngModel)]="password"
+                 name="password" [required]="true">
+        </div>
+        <span id="login-error" hidden="true">{{_translate.instant('INVALID_USERNAME_PASSWORD')}}</span>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success" (click)="logIn()" >{{_translate.instant('LOGIN')}}</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

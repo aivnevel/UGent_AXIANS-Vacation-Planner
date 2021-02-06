@@ -1,0 +1,201 @@
+<div class="w3-sidebar" style="width:13%">
+  <h3>Filters</h3>
+  <a routerLink="/newsfeed" class="items" (click)="openCloseLeftMenu('sorterenOp')">&#9658; {{_translate.instant('FILTERS_SORT_BY')}}</a>
+  <div class="dropdown-container-sorteren" id="sorterenOp" style="display:none">
+    <div>
+      <input type="radio" id="granted" name="sorting" value="granted" (change)="sort('granted')">
+      <label for="granted">{{_translate.instant('FILTERS_SORT_BY_REQUESTED')}}</label>
+    </div>
+    <div *ngFor="let sorting of visible_sorts">
+      <input type="radio" id="{{sorting}}" name="sorting" value="{{sorting}}" (change)="sort(sorting)">
+      <label for="{{sorting}}">{{sorting}}</label>
+    </div>
+    <div *ngIf="sorts.length>5">
+      <a class="hideshow" (click)="show(numberSorts,visible_sorts,sorts)" *ngIf="numberSorts < sorts.length" >{{_translate.instant('FILTERS_SHOW_MORE')}}</a>
+      <a class="hideshow" (click)="hide(numberSorts,visible_sorts,sorts)" *ngIf="numberSorts >= sorts.length" >{{_translate.instant('FILTERS_SHOW_LESS')}}</a>
+    </div>
+  </div>
+  <br id="brsorterenOp"/>
+  <a routerLink="/newsfeed" (click)="openCloseLeftMenu('maand')" class="items">&#9658; {{_translate.instant('FILTERS_MONTH')}}</a>
+  <div class="dropdown-container-sorteren" id="maand" style="display:none">
+    <div>
+      <label style="cursor: pointer"  (click)="changeMonth(1)">{{_translate.instant('FILTERS_MONTH_JAN_FEB')}}</label>
+    </div>
+    <div>
+      <label  style="cursor: pointer" (click)="changeMonth(2)">{{_translate.instant('FILTERS_MONTH_MAR_APR')}}</label>
+    </div>
+    <div>
+      <label style="cursor: pointer" (click)="changeMonth(3)">{{_translate.instant('FILTERS_MONTH_MAY_JUNE')}}</label>
+    </div>
+    <div>
+      <label style="cursor: pointer"  (click)="changeMonth(4)">{{_translate.instant('FILTERS_MONTH_JULY_AUG')}}</label>
+    </div>
+    <div>
+      <label  style="cursor: pointer" (click)="changeMonth(5)">{{_translate.instant('FILTERS_MONTH_SEP_OCT')}}</label>
+    </div>
+    <div>
+      <label style="cursor: pointer" (click)="changeMonth(6)">{{_translate.instant('FILTERS_MONTH_NOV_DEC')}}</label>
+    </div>
+  </div>
+  <br id="brmaand">
+  <a routerLink="/newsfeed" (click)="openCloseLeftMenu('functie')" class="items">&#9658; {{_translate.instant('FILTERS_FUNCTION')}} </a>
+  <a class="hideshow" *ngIf="!allFalse(selectedSkills)" (click)="deleteFilter(selectedSkills)">{{_translate.instant('FILTERS_REMOVE')}}</a>
+  <div class="dropdown-container-sorteren" id="functie" style="display:none">
+    <div *ngFor="let skill of visible_skills">
+      <input type="checkbox" id="{{skill}}" data-md-icheck (change)="checkboxSkillChanged(skill)" />
+      <label for="{{skill}}">{{skill}}</label>
+    </div>
+    <div *ngIf="skills.length>5">
+      <a class="hideshow" (click)="show(numberSkills,visible_skills,skills)" *ngIf="numberSkills < skills.length" >{{_translate.instant('FILTERS_SHOW_MORE')}}</a>
+      <a class="hideshow" (click)="hide(numberSkills,visible_skills,skills)" *ngIf="numberSkills >= skills.length" >{{_translate.instant('FILTERS_SHOW_LESS')}}</a>
+    </div>
+  </div>
+  <br id="brfunctie" />
+
+  <a routerLink="/newsfeed" (click)="openCloseLeftMenu('AMPM')" class="items">&#9658; {{_translate.instant('FILTERS_DAYPART')}} </a>
+  <a class="hideshow" *ngIf="!allFalse(selectedAMPM)" (click)="deleteFilter(AMPM_alt)" (click)="deleteFilter(selectedAMPM)">{{_translate.instant('FILTERS_REMOVE')}}</a>
+  <div class="dropdown-container-sorteren" id="AMPM" style="display:none">
+    <div *ngFor="let daypart of visible_dayparts">
+      <input type="checkbox" id="{{daypart}}" data-md-icheck (change)="checkboxAMPMChanged(daypart)"/>
+      <label for="{{daypart}}">{{daypart}}</label>
+    </div>
+  </div>
+  <br id="brAMPM"/>
+
+  <a routerLink="/newsfeed" (click)="openCloseLeftMenu('locatie')" class="items">&#9658; {{_translate.instant('FILTERS_LOCATION')}} </a>
+  <a class="hideshow" *ngIf="!allFalse(selectedLocation)" (click)="deleteFilter(this.selectedLocation)">{{_translate.instant('FILTERS_REMOVE')}}</a>
+  <div class="dropdown-container-sorteren" id="locatie" style="display:none">
+    <div *ngFor="let location of visible_locations">
+      <input type="checkbox" id="{{location}}" data-md-icheck (change)="checkboxLocationChanged(location)"/>
+      <label for="{{location}}">{{location}}</label>
+    </div>
+    <div *ngIf="locations.length>5">
+      <a class="hideshow" (click)="show(numberLocations,visible_locations,locations)" *ngIf="numberLocations < locations.length" >{{_translate.instant('FILTERS_SHOW_MORE')}}</a>
+      <a class="hideshow" (click)="hide(numberLocations,visible_locations,locations)" *ngIf="numberLocations >= locations.length" >{{_translate.instant('FILTERS_SHOW_LESS')}}</a>
+    </div>
+  </div>
+  <br id="brlocatie"/>
+
+  <a routerLink="/newsfeed" (click)="openCloseLeftMenu('typeverlof')" class="items">&#9658; {{_translate.instant('FILTERS_ABSENCE_TYPE')}} </a>
+  <a class="hideshow" *ngIf="!allFalse(selectedHolidays)" (click)="deleteFilter(this.selectedHolidays)">{{_translate.instant('FILTERS_REMOVE')}}</a>
+  <div class="dropdown-container-sorteren" id="typeverlof" style="display:none">
+    <div *ngFor="let holiday of holidayTypes">
+      <input type="checkbox" id="{{holiday}}" data-md-icheck (change)="checkboxHolidayChanged(holiday)"/>
+      <label for="{{holiday}}">{{holiday}}</label>
+    </div>
+  </div>
+
+  <a routerLink="/newsfeed" (click)="openCloseLeftMenu('comment')" class="items">&#9658; {{_translate.instant('FILTERS_COMMENTS')}} </a>
+  <a class="hideshow" *ngIf="!allFalse(selectedComments)" (click)="deleteFilter(this.selectedComments)">{{_translate.instant('FILTERS_REMOVE')}}</a>
+  <div class="dropdown-container-sorteren" id="comment" style="display:none">
+    <div *ngFor="let comment of commentTypes">
+      <input type="checkbox" id="{{comment}}" data-md-icheck (change)="checkboxCommentChanged(comment)"/>
+      <label for="{{comment}}">{{comment}}</label>
+    </div>
+  </div>
+  <br id="brcomment"/>
+
+  <a routerLink="/newsfeed" (click)="openCloseLeftMenu('favorieten')" class="items">&#9658; {{_translate.instant('FILTERS_FAVORITES')}}</a>
+  <br/>
+  <div class="dropdown-container-sorteren" id="favorieten" style="display:none">
+    <div id="namelist">
+      <a  *ngFor="let person of favorites"  id="{{person.id}}">
+        {{person.toString()}}  <a class="default" style="cursor: pointer" (click)="deletePerson(person.id);recalculate()"> &#10005; </a><br/>
+      </a>
+    </div>
+    <input type="text" list="doctors" name="doctors" [(ngModel)]='inputname' id="inputname"/>
+    <datalist id="doctors">
+      <option  *ngFor="let person of persons" [value]="person.toString()"></option>
+    </datalist>
+    <br/>
+    <input type="submit" name="bewaren" class="spacing-bewaar" onclick="document.getElementById('inputname').value = ''" value="Bewaar" (click)="addPerson()"/>
+  </div>
+  <input type="submit" class="hideshow" value="{{_translate.instant('FILTERS_REMOVE_ALL')}}" *ngIf="!allFalse(selectedLocation) || !allFalse(selectedAMPM) || !allFalse(selectedSkills) || !allFalse(selectedComments) || !allFalse(selectedHolidays)" (click)="deleteAllFilters()"/>
+  <hr>
+  <input *ngIf="mode=='Planner'" type="submit" class="spacing-bewaar"  (click)="togglePlanning()" value="{{_translate.instant('MINI_CALENDAR_PLAN_FOR_SOMEONE_ELSE')}}"/>
+  <input *ngIf="mode!='Planner'" type="submit" class="spacing-bewaar"  (click)="togglePlanning()" value="{{_translate.instant('MINI_CALENDAR_PLAN_FOR_YOURSELF')}}"/>
+  <ng-sidebar-container *ngIf="isPlanner" class="sidebar-container">
+    <ng-sidebar [(opened)]="planninghidden" position="end" class="ng-sidebar--right md-content">
+      <app-plannereventform *ngIf="mode == 'Planner'" [plannerid]="idemp" (employeeOfHoliday)="getPersonOfHoliday($event)" (holidayCreated)="addHolidayToPerson($event)"></app-plannereventform>
+      <app-eventform *ngIf="mode != 'Planner'" [isCalendar]="false"></app-eventform>
+    </ng-sidebar>
+  </ng-sidebar-container>
+</div>
+
+
+<input class="zoeken" list="search" type="text" (ngModelChange)="dataChanged($event)" ngModel  placeholder="🔍 {{_translate.instant('SEARCH')}}" >
+<datalist id="search">
+  <option *ngFor="let word of searchAll" [value]="word"></option>
+</datalist>
+<span >
+  <mat-icon id="requestfilter" style="padding-left: 16px" (click)="openSettingsWindow()" class="lock_icon">settings</mat-icon>
+  <h3 class="right" *ngIf="mode=='Planner'" >{{_translate.instant('REQUESTS')}} <mat-icon *ngIf="collisionsLoaded" ngbTooltip="Update states" (click)="getAndSetCollisionStates()" class="lock_icon2">rotate_left</mat-icon><mat-spinner *ngIf="!collisionsLoaded" [diameter]="25" color="warn" style="display: inline-flex;"></mat-spinner></h3>
+  <h3 class="right" *ngIf="mode!='Planner'" >{{_translate.instant('PLANNING')}}</h3>
+</span>
+<ul class="requests">
+  <div class="dropup">
+    <input class="dropbtn;spacing-bewaar" value="{{_translate.instant('SELECT_PLANNING_UNIT')}}" type="submit">
+    <div class="dropup-content">
+      <a *ngFor="let PU of planningsUnitIDs[mode]" (click)="selectedItemChanged(PU)" >{{PU}}</a>
+    </div>
+  </div>
+  <div id="messagePossible" ></div>
+  <cdk-virtual-scroll-viewport *ngIf="mode=='Planner'" style="height: 1000px" itemSize="90" id="requestsList">
+    <ng-container *ngIf="!requestFilters" >
+      <ng-container   *ngFor="let doctor of planningsUnit">
+      <ng-container *ngFor="let holiday of doctor.Holidays">
+        <div *ngIf="holiday.state == ('New' || 'InConsideration') && holiday.shown && (holidayNew[currentPlanningsUnitName].indexOf(holiday.idMessage)!=-1 || holidayInConsideration[currentPlanningsUnitName].indexOf(holiday.idMessage)!=-1)">
+          <li class="a-request" id="hm{{holiday.idMessage}}"><app-requests [PULocations]="planningsUnitLocations[currentPlanningsUnitName]" [PUSkills]="planningsUnitSkills[currentPlanningsUnitName]" [InConsideration]="holidayInConsideration[currentPlanningsUnitName].indexOf(holiday.idMessage)!=-1" [fullname]="doctor.toString()" [skills]="doctor.skills" [type]="holiday.type" [comment]="holiday.comment" [dayPart]="holiday.dayPart" [last]="holiday.endDateHoliday" [start]="holiday.startDateHoliday" [locations]="doctor.locations" [id]="holiday.idMessage" [vacationName]="holiday.vacationName" [collisions]="collisions[holiday.idMessage]" [isPossible]="undefined" [isCollision]="isCollision(collisions[holiday.idMessage])" [requestDate]="holiday.requestDate" [state]="holiday.state" (messageEvent)="receiveMessage($event)">{{holiday}}</app-requests></li>
+        </div>
+    </ng-container>
+    </ng-container>
+    </ng-container>
+    <!--<ng-container *ngIf="requestFilters" >
+      <ng-container   *ngFor="let doctor of filteredDoctors">
+        <ng-container *ngFor="let absence of doctor.Holidays">
+          <ng-container   *ngIf="exists(absence)">
+            <div *ngIf="absence.state == 'New'">
+              <li class="a-request" id="hm{{absence.idMessage}}"><app-requests [fullname]="doctor.toString()" [skills]="doctor.skills" [type]="absence.type" [comment]="absence.comment" [dayPart]="absence.dayPart" [last]="absence.endDateHoliday" [start]="absence.startDateHoliday" [locations]="doctor.locations" [id]="absence.idMessage" [vacationName]="absence.vacationName" [collisions]="collisions[absence.idMessage]" [isPossible]="undefined" [isCollision]="isCollision(collisions[absence.idMessage])" [requestDate]="absence.requestDate" [state]="absence.state" (messageEvent)="receiveMessage($event)">{{absence}}</app-requests></li>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>-->
+    <ng-container *ngIf="requestFilters" >
+        <ng-container *ngFor="let absence of filteredRequests">
+          <ng-container   *ngIf="exists(absence) && absence.shown">
+            <div *ngIf="absence.state == ('New' || 'InConsideration') && (holidayNew[currentPlanningsUnitName].indexOf(absence.idMessage)!=-1 || holidayInConsideration[currentPlanningsUnitName].indexOf(absence.idMessage)!=-1)">
+              <li class="a-request" id="hm{{absence.idMessage}}"><app-requests [PULocations]="planningsUnitLocations[currentPlanningsUnitName]" [PUSkills]="planningsUnitSkills[currentPlanningsUnitName]" [InConsideration]="holidayInConsideration[currentPlanningsUnitName].indexOf(absence.idMessage)!=-1" [fullname]="absence.person.toString()" [skills]="absence.person.skills" [type]="absence.type" [comment]="absence.comment" [dayPart]="absence.dayPart" [last]="absence.endDateHoliday" [start]="absence.startDateHoliday" [locations]="absence.person.locations" [id]="absence.idMessage" [vacationName]="absence.vacationName" [collisions]="collisions[absence.idMessage]" [isPossible]="undefined" [isCollision]="isCollision(collisions[absence.idMessage])" [requestDate]="absence.requestDate" [state]="absence.state" (messageEvent)="receiveMessage($event)">{{absence}}</app-requests></li>
+            </div>
+          </ng-container>
+        </ng-container>
+    </ng-container>
+  </cdk-virtual-scroll-viewport>
+  <span *ngIf="mode!='Planner'" class="updatesicon" ><mat-icon style="margin-top: 10%; font-size: 40px; vertical-align: -5px;margin-right: 3%;">update</mat-icon> Updates</span>
+  <hr>
+  <ng-container *ngIf="mode!='Planner'">
+    <ng-container *ngFor="let doctor of this.persons" >
+      <ng-container *ngIf="doctor.id==idemp">
+        <ng-container *ngFor="let request of doctor.Holidays">
+        <li style="list-style-type: none"><app-update id="updates{{request.id}}" [type]="request.type" [start]="request.startDateHoliday" [end]="request.endDateHoliday" [Update]="request.lastUpdate" [state]="request.state">{{request}}</app-update></li>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ul>
+
+<div class="news">
+  <app-mini-calendar #mincal *ngIf="!toggle; else gridcomponent"></app-mini-calendar>
+</div>
+
+<ng-template #gridcomponent>
+  <app-gridtable></app-gridtable>
+</ng-template>
+<div><mat-icon class="help" (click)="openHelpWindow()">help</mat-icon></div>
+
+<ng-template #modalContent let-close="close">
+  <p><app-settings (messageEvent)="changeSettings($event)" [isPlanner]="isPlanner" [plannerMode]="plannerMode" [View]="toggle" [requestFilters]="requestFilters"></app-settings></p>
+</ng-template>
+<ng-template #helpWindow let-close="close">
+  <p><app-help></app-help></p>
+</ng-template>

@@ -1,0 +1,25 @@
+.settings{
+  font-size: 40px;
+  cursor:pointer;
+}
+
+.text{
+  margin-left: 3%;
+  color: #2160b2;
+  vertical-align: 15px;
+}
+
+h3 {
+  padding-left: 10px;
+  margin: 0 0 10px;
+  width: auto;
+  color: white;
+  font-size: 40px;
+  font-weight: normal;
+  text-align: left;
+  background-color: #2160b2;
+}
+
+.basic{
+  padding-left: 10px;
+}

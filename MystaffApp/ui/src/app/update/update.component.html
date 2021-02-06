@@ -1,0 +1,3 @@
+<p style="color: #2160b2;font-size: smaller">
+  ({{formatDate(lastUpdate)}}) <mat-icon style="vertical-align: -5px">{{formatState(state)}}</mat-icon> : <mat-icon style="vertical-align: -5px"> {{formatType(type)}}</mat-icon>{{formatDate(start)}}<span *ngIf="formatDate(start)!=formatDate(end)" > tot {{formatDate(end)}}</span>
+</p>

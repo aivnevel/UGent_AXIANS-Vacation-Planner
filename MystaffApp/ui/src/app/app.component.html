@@ -1,0 +1,35 @@
+<!--the navigation bar on top of every page-->
+<div class="navigationbar" style="margin-bottom: 0.75%">
+<ul>
+  <li><a routerLink="/calendar"><span><mat-icon>home</mat-icon></span>{{_translate.instant('HOLIDAY_PLANNER')}}</a></li>
+  <li><a routerLink="/newsfeed"><span><mat-icon>calendar_today</mat-icon></span>{{_translate.instant('PLANNING_OVERVIEW')}}</a></li>
+  <li><a routerLink="/teamplanning"><span><mat-icon>group</mat-icon></span>{{_translate.instant('TEAM_PLANNING')}}
+  </a> </li>
+  <!--log-out menu-->
+  <li style="float:right">
+    <div class="menustyle">
+    <mat-menu #logoutMenu="matMenu">
+      <button mat-menu-item (click)="setLoginStatus()"><span>{{_translate.instant('LOGOUT')}}</span></button>
+    </mat-menu>
+    <button mat-icon-button [matMenuTriggerFor]="logoutMenu">
+      <mat-icon>person</mat-icon>
+    </button>
+    </div>
+  </li>
+  <!--choose language selector-->
+  <li style="float: right;">
+    <div class="menustyle">
+    <mat-menu #languageMenu="matMenu">
+      <button mat-menu-item *ngFor="let lang of supportedLanguages" (click)="selectLang(lang.value)">
+        <img src="../assets/{{lang.value}}-flag.png">
+        <span>{{lang.display}}</span>
+      </button>
+    </mat-menu>
+    <button mat-icon-button [matMenuTriggerFor]="languageMenu">
+      <mat-icon>language</mat-icon>
+    </button>
+    </div>
+  </li>
+</ul>
+</div>
+<router-outlet></router-outlet>

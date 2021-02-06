@@ -1,0 +1,90 @@
+<!--use the material table template-->
+<div class="table-container">
+  <!--use the datasource which contains the data given as input when creating the component-->
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!--define all columns and bind data-->
+  <ng-container *ngIf="table_titles[0]=='name'" matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> {{_translate.instant('NAME')}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="state">
+    <mat-header-cell *matHeaderCellDef> {{_translate.instant('HISTORY_STATUS')}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> <mat-icon>{{element.symbol}}</mat-icon> </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="history">
+    <mat-header-cell *matHeaderCellDef> {{_translate.instant('HISTORY_HISTORY')}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> <mat-icon *ngIf="element.history.length > 0">list</mat-icon> </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="requestDate">
+    <mat-header-cell *matHeaderCellDef> {{_translate.instant('HISTORY_REQUEST_DATE')}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.requestDate}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="start">
+    <mat-header-cell *matHeaderCellDef> {{_translate.instant('HISTORY_START_DATE')}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.start}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="end">
+    <mat-header-cell *matHeaderCellDef> {{_translate.instant('HISTORY_END_DATE')}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.end}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <mat-header-cell *matHeaderCellDef> {{_translate.instant('HISTORY_ABSENCE_TYPE')}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{typeToString(element.type)}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="comment">
+    <mat-header-cell *matHeaderCellDef> {{_translate.instant('HISTORY_COMMENT')}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.comment}} </mat-cell>
+  </ng-container>
+
+  <!-- Expanded Content Column - The detail row is made up of this one column -->
+  <ng-container matColumnDef="expandedDetail">
+    <mat-cell *matCellDef="let detail">
+      <div id="tableDetail" *ngIf="detail.element.history.length > 0">
+        <table  class="table table-striped table-hover table-sm">
+          <thead>
+            <tr>
+              <td>{{_translate.instant('HISTORY_ID')}}</td>
+              <td>{{_translate.instant('HISTORY_STATUS')}}</td>
+              <td>{{_translate.instant('HISTORY_REQUEST_DATE')}}</td>
+              <td>{{_translate.instant('HISTORY_START_DATE')}}</td>
+              <td>{{_translate.instant('HISTORY_END_DATE')}}</td>
+              <td>{{_translate.instant('HISTORY_ABSENCE_TYPE')}}</td>
+              <td>{{_translate.instant('HISTORY_COMMENT')}}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let history of detail.element.history">
+              <td>{{history.id}}</td>
+              <td><mat-icon>{{history.emoji}}</mat-icon></td>
+              <td>{{history.requestDate}}</td>
+              <td>{{history.start}}</td>
+              <td>{{history.end}}</td>
+              <td>{{history.type}}</td>
+              <td>{{history.comment}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-cell>
+  </ng-container>
+  <!--define column names-->
+  <mat-header-row *matHeaderRowDef="table_titles; sticky: true"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: table_titles;"
+      matRipple
+      class="element-row"
+      [class.expanded]="expandedElement == row"
+      (click)="expandedElement = row"></mat-row>
+  <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+           [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
+           style="overflow: hidden">
+
+  </mat-row>
+</mat-table>
+</div>

@@ -1,0 +1,170 @@
+.post-request-test {
+  padding-top: 1rem;
+}
+
+h3 {
+  padding-left: 10px;
+  margin: 0 0 10px;
+  width:auto;
+  color: white;
+  font-size: 40px;
+  font-weight: normal;
+  text-align: left;
+  /*
+  border-top:solid black 1px;
+  border-bottom: solid black 1px;
+  */
+  background-color: #2160b2;
+}
+
+.w3-sidebar{
+  float:left;
+}
+
+#container {
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.items {
+  display: inline-block;
+  margin-right: 1%;
+  padding-left: 1%;
+  cursor:pointer;
+  outline: none;
+}
+
+.log-out{
+  float:right;
+}
+
+.items:hover{
+  text-decoration: none;
+  cursor:pointer;
+}
+
+button {
+  background: transparent;
+  border: none;
+  color: white;
+}
+
+.bar-item{
+  color: white;
+  font-size: large;
+}
+.bar-item:hover{
+  text-decoration: none;
+}
+
+.name{
+  font-weight: bold;
+}
+
+.dropdown-container-sorteren{
+  padding-left: 10%;
+}
+
+input {
+  margin: .4rem;
+  color: #2160b2;
+}
+
+input[type=submit] {
+  color: #2160b2;
+  padding:5px 15px;
+  background:white;
+  cursor:pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+label{
+  color: #2160b2;
+}
+
+li a span{
+  padding-right: 13px;
+}
+
+.nav-up {
+  top: -40px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden !important;
+  background-color: #2160b2;
+  max-height: 50px;
+}
+
+li {
+  float: left;
+}
+
+li a{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 14px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.menustyle{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 14px;
+  text-decoration: none;
+}
+
+li:hover {
+  background-color: #4d7fc1;
+}
+
+
+
+img {
+  width:30px;
+  height:25px;
+  padding-right: 5px;
+}
+
+
+button span{
+  color: black;
+}
+
+button{
+  outline: none;
+}
+
+a mat-icon {
+  max-height: 24px;
+  max-width: 24px;
+  vertical-align: -6px;
+}
+
+button mat-icon{
+  height: 24px;
+  width: 24px;
+  vertical-align: 0px;
+}
+
+.mat-icon-button{
+  height: 24px;
+  width: 24px;
+  vertical-align: center;
+}
+
+.navigationbar{
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+li a span{
+  padding-right: 12px;
+}

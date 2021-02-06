@@ -1,0 +1,37 @@
+.selectType {
+  float: start;
+  width: 200px;
+  position: relative;
+}
+
+.selectPeriod {
+  float: start;
+  width: 200px;
+  position: relative;
+}
+
+.all {
+  margin: 10px;
+  padding: 4.4em;
+}
+
+.all-newsfeed{
+  margin: 10px;
+  padding: 0.1em;
+}
+
+.comments {
+  resize: none;
+  width: 200px;
+  position: relative;
+}
+
+.warning-field > p {
+  margin: 0;
+}
+
+.editalert{
+  background-color: dimgray;
+  color: whitesmoke
+}
+

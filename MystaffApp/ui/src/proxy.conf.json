@@ -1,0 +1,8 @@
+{
+  "/rest/*": {
+    "target": "https://mystaff.axians.be/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "info"
+  }
+}

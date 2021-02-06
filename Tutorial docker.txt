@@ -1,0 +1,103 @@
+Hoe docker updaten?
+
+Eerste keer
+
+
+download de Windows docker terminal en de UGent vpn
+https://docs.docker.com/toolbox/toolbox_install_windows/
+https://helpdesk.ugent.be/vpn/
+check of GIT\docker\mystaff-java\unzipJarScript de volgende tekst bevat, en niet extra mappen op lijn 1
+"unzip -d src *-1.0-SNAPSHOT.zip
+mv src/*/* src/
+rm src/bin/*.bat
+mv src/bin/* src/bin/start"
+
+
+Back-end builden
+
+
+in IntelliJ, in de sbt terminal => "dist"
+(anderhalve minuut wachten)
+Ga naar "GITMAP\MystaffApp\target\universal"
+kopieer de zip "java-play-angular-seed-1.0-SNAPSHOT"
+plaats hem in "GITMAP\docker\mystaff-java"
+Verwijder de map src, als die bestaat.
+
+gebruik nu een linux terminal, ik gebruik de docker terminal
+cd naar "GITMAP\docker\mystaff-java"
+bash unzipJarScript
+
+
+Front-end builden
+
+
+in IntelliJ, in de gewone terminal => "ng build --prod"
+kopieer dan de inhoud 
+van "GITMAP\MystaffApp\ui\dist\java-play-angular-seed"
+naar "GITMAP\docker\mystaff-http\src"
+
+
+Lokaal runnen
+
+
+In dockerterminal
+cd naar "GITMAP\docker"
+bash buildandrun.sh
+(normaal gezien zie je 4 keer done als het klaar is)
+Runt nu op 192.168.99.100:8081 (en 8082)
+
+OPGELET: ALS JE DE PROJECT.YML AANPAST 
+voor module in kwestie: "docker stop ID" "docker rm ID"
+
+
+Checken op fouten
+
+
+In dockerterminal
+normaal runnen er 4 containers => http, java, mariadb en mongodb (niet gebruikt)
+Deze moet je zien met "docker container ls"
+als je niet de 3 nodige ziet => "docker container ls -a"
+Om te checken wat het probleem is bij die dat plat ligt =>
+"docker logs IDVANDIEDATKAPOTISDATJEVONDBIJDEVORIGEOPDRACHT"
+met ID iets in de vorm 6d5d7f4de8e99
+commando uitvoeren in module "docker exec IDVANMODULE COMMAND"
+bash krijgen in module "docker exec -it IDVANMODULE bash"
+inloggen testen: mysql -u user -ppass
+=> Mariadb
+mysql -u root
+=> select user, password from mysql.user;
+=> show databases;
+
+
+Op afstand runnen
+
+
+ZORG DAT UGENT VPN AAN STAAT
+In dockerterminal
+cd naar "GITMAP"
+scp -r docker mystaff@bpvop5.ugent.be:/home/mystaff
+(geef nu wachtwoord van ons project in)
+
+ssh -l mystaff bpvop5.ugent.be
+(geef nu wachtwoord van ons project in)
+touch RESTART
+wacht 5 min
+=> runt nu op http://bpvop5.ugent.be:8081/
+(backend op 8082)
+
+URLS
+
+
+Lokaal: backend en frontend in intelliJ, mariadb op docker
+url frontend -> backend: http://localhost:9000
+url backend -> database: jdbc:mysql://192.168.99.100:3306/iiidb
+Evolutions enabled -> true;
+YML: poort 3306 UNCOMMENTED, GEEN depends java on mariadb
+
+Docker op afstand: alles in die docker
+url frontend -> backend: http://bpvop5.ugent.be:8082 in appService
+url backend -> database: "jdbc:mysql://mystaff-mariadb:3306/iiidb" in application.conf
+evolutions enabled -> false in application.conf
+YML: poort 3306 commented, WEL depends java on mariadb in project.yml
+
+

@@ -1,0 +1,285 @@
+h3 {
+  padding-left: 10px;
+  margin: 0 0 10px;
+  width: auto;
+  color: white;
+  font-size: 40px;
+  font-weight: normal;
+  text-align: left;
+  margin-left:0px;
+  background-color: #2160b2;
+  white-space: nowrap;
+}
+
+.news{
+  border-radius: 8px;
+  border: 2px solid #a40064;
+  padding: 20px;
+  width: 64%;
+  margin-left: 14%;
+  margin-bottom: 10px;
+  overflow: auto;
+
+}
+
+.updatesicon {
+  font-size: 40px;
+  color: #2160b2;
+}
+
+.help{
+  margin-left: 62%;
+  color: #2160b2;
+  font-size: 40px;
+  cursor:pointer;
+}
+
+.requests{
+  padding-right: .75%;
+  width: 23%;
+  justify-content: center;
+  margin-bottom: 10px;
+  float:right;
+}
+
+.a-request{
+   margin-bottom: 10px;
+   padding: 10px;
+   border-radius: 8px;
+   border: 2px solid #a40064;
+ }
+
+.a-request-never{
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid green;
+}
+
+.a-request-unknown{
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #000000;
+}
+
+.a-request-notallowed{
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid red;
+}
+
+.a-request-sometimes{
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid orange;
+}
+
+.zoeken {
+  width: 64%;
+  height: 50px;
+  background-position: center;
+  margin-left: 1%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  color: #2160b2;
+  outline: none;
+  padding-left: 15px;
+}
+
+.w3-sidebar{
+  float:left;
+}
+
+.right{
+  float:right;
+  width: 18%;
+  padding-right: 3em;
+}
+
+#container div.block {
+  white-space: nowrap;
+  overflow: auto;
+}
+.items {
+  display: inline-block;
+  margin-right: 1%;
+  padding-left: 1%;
+}
+
+.items:hover{
+  text-decoration: none;
+}
+
+.bar-item{
+  color: white;
+  font-size: medium;
+}
+.bar-item:hover{
+  text-decoration: none;
+}
+
+.name{
+  font-weight: bold;
+}
+
+.dropdown-container-sorteren{
+  padding-left: 10%;
+}
+
+.spacing-bewaar {
+  color: #2160b2;
+  outline: none;
+}
+
+input{
+  margin-left: .4rem;
+  margin-right: .4rem;
+  margin-bottom: .4rem;
+}
+
+input[type=submit] {
+  color: #2160b2;
+  padding:5px 15px;
+  background:white;
+  cursor:pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+label{
+  color: #2160b2;
+}
+
+.default{
+  cursor: default;
+}
+
+.oneLine{
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.hideshow{
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 .5em;
+  font-size: .9em;
+  line-height: 1.5;
+  border: 1px solid #ddd;
+  border-radius: .25em;
+  color: #2160b2;
+  margin-right: 5%;
+}
+
+a:not([href]):not([tabindex]) {
+  color: #2160b2;
+  text-decoration: none;
+}
+
+.requestsbutton {
+  width: 15%;
+  padding: 10px;
+  background-position: right;
+  margin-left: 5%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  color: #2160b2;
+  outline: none;
+}
+
+.button-updates{
+  float:right;
+}
+
+.absence-buttons{
+  width: 3em;
+  background-color: white;
+  border-spacing: 10px;
+}
+
+.lock_icon{
+  font-size:40px;
+  vertical-align: -16px;
+  color: #2160b2;
+  cursor:pointer;
+}
+
+.lock_icon2{
+  cursor:pointer;
+}
+
+.lock_icon3{
+  vertical-align: -16px;
+}
+
+.text{
+  padding-left: 4.3%;
+  padding-bottom: 1%;
+  color: #2160b2;
+}
+
+.menu{
+  margin-bottom: 10px;
+}
+
+.dropbtn {
+  background-color: #2160b2;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+/* The container <div> - needed to position the dropup content */
+.dropup {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropup content (Hidden by Default) */
+.dropup-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropup */
+.dropup-content a {
+  color: #2160b2;
+  padding: 5px 5px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+/* Change color of dropup links on hover */
+.dropup-content a:hover {background-color: #ddd}
+
+/* Show the dropup menu on hover */
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+/* Change the background color of the dropup button when the dropup content is shown */
+.dropup:hover .dropbtn {
+  background-color: #a40064;
+}
+
+.sidebar-container {
+  height: 130vh;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+
+}
+
+:host >>> .ng-sidebar {
+  /*width: 15%;*/
+  height: 100em;
+  max-width: 100%;
+}

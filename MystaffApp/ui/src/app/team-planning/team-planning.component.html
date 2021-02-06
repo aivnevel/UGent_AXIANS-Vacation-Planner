@@ -1,0 +1,171 @@
+<ng-sidebar-container class="sidebar-container">
+  <div ng-sidebar-content>
+    <!--define pop up for an event-->
+    <ng-template #modalContent let-close="close">
+      <div>
+        <h3 class="popupheader">{{_translate.instant('POPUP_ABSENCE')}}</h3>
+      </div>
+      <div class="popuptext">
+        <p>{{_translate.instant('POPUP_REASON')}} {{_translate.instant(modalData?.event.title)}}</p>
+        <p>{{_translate.instant('POPUP_START_DATE')}} {{modalData?.event.start.getDate()}}-{{modalData?.event.start.getMonth()}}-{{modalData?.event.start.getFullYear()}}</p>
+        <p>{{_translate.instant('POPUP_END_DATE')}} {{modalData?.event.end.getDate()}}-{{modalData?.event.end.getMonth()}}-{{modalData?.event.end.getFullYear()}}</p>
+        <p>{{_translate.instant('POPUP_FROM_TO_DAILY')}} -- {{modalData?.event.start.getHours()}}:00/{{modalData?.event.end.getHours()}}:00</p>
+        <p>{{_translate.instant(('POPUP_STATUS'))}} {{_translate.instant(modalData?.event.state)}}</p>
+        <p>{{_translate.instant('POPUP_SELF_COMMENT')}} {{modalData?.event.meta}}</p>
+      </div>
+    </ng-template>
+    <!--display events in calendar-->
+    <ng-template
+      #customCellTemplate
+      let-day="day"
+      let-openDay="openDay"
+      let-locale="locale"
+      let-tooltipPlacement="tooltipPlacement"
+      let-highlightDay="highlightDay"
+      let-unhighlightDay="unhighlightDay"
+      let-eventClicked="eventClicked"
+      let-tooltipTemplate="tooltipTemplate"
+      let-tooltipAppendToBody="tooltipAppendToBody">
+      <div class="cal-cell-top-custom">
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+      </div>
+      <div class="cal-day-cell" *ngIf="day.badgeTotal > 0" [ngStyle]="{'background-color': 'lightgray'}">
+          <mat-icon class="mat-icon" *ngFor="let x of day.events">highlight_off</mat-icon>
+      </div>
+    </ng-template>
+    <!--define previous, current, next month, week, day-->
+    <div class="row text-center">
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="btn btn-primary button-header"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (click)="MonthClicked()"
+            (viewDateChange)="activeDayIsOpen = false"
+          >
+            {{_translate.instant('PREVIOUS')}}
+          </div>
+          <div
+            class="btn btn-outline-secondary button-header"
+            mwlCalendarToday
+            [(viewDate)]="viewDate"
+            (click)="MonthClicked()"
+          >
+            {{_translate.instant('TODAY')}}
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (click)="MonthClicked()"
+            (viewDateChange)="activeDayIsOpen = false"
+          >
+            {{_translate.instant('NEXT')}}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3 *ngIf=" view ===CalendarView.Month">{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}
+          - {{ viewSecondDate | calendarDate:(view + 'ViewTitle'):locale }}</h3>
+        <h3 *ngIf=" view !=CalendarView.Month">{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}</h3>
+      </div>
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="btn btn-primary button-header"
+            (click)="view = CalendarView.Month"
+            [class.active]="view === CalendarView.Month"
+          >
+            {{_translate.instant('MONTH')}}
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            (click)="view = CalendarView.Week"
+            [class.active]="view === CalendarView.Week"
+          >
+            {{_translate.instant('WEEK')}}
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            (click)="view = CalendarView.Day"
+            [class.active]="view === CalendarView.Day"
+          >
+            {{_translate.instant('DAY')}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <!--select the team-->
+    <div [ngSwitch]="view" class="news">
+      <div id="chooseTeam">
+        <mat-form-field >
+          <mat-label>{{_translate.instant('CHOOSE_TEAM')}}</mat-label>
+          <mat-select  multiple>
+            <mat-option *ngFor="let team of teamList" [value]="team.id" (onSelectionChange)="addTeamToCalendar($event)">{{team.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [locale]="locale"
+        [cellTemplate]="customCellTemplate"
+        [activeDayIsOpen]="activeDayIsOpen"
+        [weekStartsOn]="weekStartsOn"
+        [weekendDays]="weekendDays"
+        (eventClicked)="showEvent($event.event)"
+        (dayClicked)="dayClicked($event.day)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewSecondDate"
+        [events]="events"
+        [refresh]="refresh"
+        [locale]="locale"
+        [cellTemplate]="customCellTemplate"
+        [weekStartsOn]="weekStartsOn"
+        (eventClicked)="showEvent($event.event)"
+        [weekendDays]="weekendDays"
+        [activeDayIsOpen]="activeDayIsOpen2"
+        (dayClicked)="dayClicked2($event.day)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [locale]="locale"
+        [weekStartsOn]="weekStartsOn"
+        [weekendDays]="weekendDays"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [locale]="locale"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-day-view>
+    </div>
+    <br/>
+    <!--load the history component with data added from teamplanning-->
+    <span class="updates"><mat-icon>list</mat-icon> {{_translate.instant('HISTORY')}}</span>
+    <div class="history">
+      <app-history [rows]="rows" [table_titles]="table_titles" class="history_table"></app-history>
+    </div>
+  </div>
+</ng-sidebar-container>

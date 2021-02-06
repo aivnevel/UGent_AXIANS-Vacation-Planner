@@ -1,0 +1,77 @@
+<div>
+  <div id="all" class="all">
+
+    <form class="form-horizontal">
+      <fieldset>
+        <legend>{{_translate.instant('PLAN_ABSENCE_HERE')}}</legend>
+        <ngb-alert *ngIf="warning !== ''" [dismissible]="false" class="warning-field">
+          <p><strong>{{warning}}</strong></p>
+        </ngb-alert>
+
+        <ngb-alert class="editalert" *ngIf="edit == true" [dismissible]="false">
+          <p><strong>IN EDIT MODE</strong></p>
+        </ngb-alert>
+
+        <div class="form-group">
+          <label for="startdatum">{{_translate.instant('START_DATE')}}</label>
+          <input class="form-control date-input" placeholder="yyyy-mm-dd" id="startdatum"
+                 name="startdate" [markDisabled]="isDisabledStart" [(ngModel)]="start" ngbDatepicker #d1="ngbDatepicker"
+                 (click)="d1.toggle()"
+                 (ngModelChange)="selectstart(start)" [required]="true">
+        </div>
+
+        <div class="form-group">
+          <label for="einddatum">{{_translate.instant('END_DATE')}}</label>
+          <input class="form-control date-input" placeholder="yyyy-mm-dd" id="einddatum"
+                 name="enddate" [markDisabled]="isDisabledEnd" [(ngModel)]="end" ngbDatepicker #d2="ngbDatepicker"
+                 (click)="d2.toggle()"
+                 (ngModelChange)="selectend(end)" [required]="true">
+        </div>
+
+        <div class="form-group">
+          <label for="typeafw">{{_translate.instant('ABSENCE_TYPE')}}</label>
+          <select class="selectType" id="typeafw" name="selectAbsence" [(ngModel)]="selectedOption" [required]="true">
+            <option *ngFor="let afw of absenceChoiceMapper.keys()"
+                    [ngValue]="afw"> {{afw}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="periode">{{_translate.instant('DURATION')}}</label>
+          <select class="selectPeriod" id="periode" name="selectPeriod" [(ngModel)]="selectedPeriod" [required]="true">
+            <option *ngFor="let p of periodChoiceMapper.keys()"
+                    [ngValue]="p"> {{p}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="commentaar">{{_translate.instant('COMMENT')}}</label>
+          <textarea class="comments" id="commentaar" maxlength="255" name="commentaar"
+                    [(ngModel)]="comments"></textarea>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary" (click)="buttonClicked()"
+                  [disabled]="isDisabled">{{_translate.instant('SUBMIT')}}</button>
+        </div>
+
+      </fieldset>
+
+    </form>
+    <br>
+    <hr>
+    <br>
+    <form class="form-horizontal">
+      <fieldset>
+        <legend>{{_translate.instant('EXTRA_ABSENCE_INFO')}}</legend>
+        <p><b>{{_translate.instant('EXTRA_ABSENCE_INFO_DAYS')}}</b></p>
+        <p>{{_translate.instant('EXTRA_ABSENCE_INFO_MAX_ANNUAL')}} <b>{{amountPossibleDays}}</b></p>
+        <p>{{_translate.instant('EXTRA_ABSENCE_INFO_APPROVED')}} <b>{{amountAbsencesApproved}}</b></p>
+        <p>{{_translate.instant('EXTRA_ABSENCE_INFO_PLANNED')}} <b>{{amountPotentialAbsences}}</b></p>
+      </fieldset>
+    </form>
+
+  </div>
+</div>

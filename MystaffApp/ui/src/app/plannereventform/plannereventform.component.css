@@ -1,0 +1,19 @@
+.selectType {
+  float: start;
+  width: 200px;
+}
+
+.selectPeriod {
+  float: start;
+  width: 200px;
+  margin-left: 0.05em;
+}
+
+.comments {
+  resize: none;
+  width: 200px;
+}
+
+.all{
+  margin-left: 0.7em;
+}

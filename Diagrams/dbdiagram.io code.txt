@@ -1,0 +1,107 @@
+table exact_date {
+  id bigint
+  date date
+  daypart int
+  holiday_message_id bigint
+}
+
+table exact_date_hmh {
+  id bigint
+  date date
+  daypart int
+  holiday_message_history_id id
+}
+
+table holiday_message {
+  id bigint
+  employee_id varchar
+  type integer
+  state  integer
+  request_date  timestamp
+  last_update timestamp
+  request_by_id varchar
+  planner_of_last_update varchar
+  comment varchar
+}
+
+table holiday_message_history {
+  id bigint
+  type integer
+  state  integer
+  request_date  timestamp
+  request_by_id varchar
+  comment varchar
+  holiday_message_id bigint
+}
+
+table planning_unit_state {
+  id bigint
+  holiday_message_id bigint
+  unit_id varchar
+  comment varchar
+  state int
+  planner_id varchar
+}
+
+table settings{
+  employee_id varchar
+  request_filters boolean
+  sat_on varchar
+  daypart varchar
+}
+
+table settings_period{
+  settings_employee_id varchar
+  period varchar
+}
+
+table settings_function {
+  settings_employee_id varchar
+  function varchar
+}
+
+table settings_location {
+  settings_employee_id varchar
+  location varchar
+}
+
+table settings_favorites {
+  settings_employee_id varchar
+  favorites varchar
+}
+
+table settings_comments {
+  settings_employee_id varchar
+  comments varchar
+}
+
+table settings_absence_type {
+  settings_employee_id varchar
+  absencetype varchar
+}
+
+table absence_counter {
+  employee_id                   varchar
+  max_days_this_year            double
+  last_update                   timestamp
+  last_comment                  varchar
+}
+
+Ref: exact_date.holiday_message_id > holiday_message.id
+Ref: exact_date_hmh.holiday_message_history_id > holiday_message_history.id
+Ref: planning_unit_state.holiday_message_id > holiday_message.id
+
+
+Ref: "settings"."employee_id" < "settings_period"."settings_employee_id"
+
+Ref: "settings"."employee_id" < "settings_function"."settings_employee_id"
+
+Ref: "settings"."employee_id" < "settings_location"."settings_employee_id"
+
+Ref: "settings"."employee_id" < "settings_favorites"."settings_employee_id"
+
+Ref: "settings"."employee_id" < "settings_comments"."settings_employee_id"
+
+Ref: "settings"."employee_id" < "settings_absence_type"."settings_employee_id"
+
+Ref: "holiday_message"."id" < "holiday_message_history"."holiday_message_id"

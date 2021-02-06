@@ -1,0 +1,10 @@
+.form-horizontal {
+  position: relative;
+  margin: 0 auto;
+  padding: 20px 20px 20px;
+}
+
+.form-horizontal div.form-group button.btn.btn-primary {
+  text-align: right;
+}
+

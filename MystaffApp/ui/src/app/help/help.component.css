@@ -1,0 +1,39 @@
+.settings{
+  font-size: 40px;
+  cursor:pointer;
+  vertical-align: -15px;
+}
+
+.text{
+  padding-left: 3%;
+  color: #2160b2;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  margin-left: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+}
+.emoji{
+  margin-left: 10px;
+  color: #2160b2;
+}
+
+h3 {
+  padding-left: 10px;
+  margin: 0 0 10px;
+  width: auto;
+  color: white;
+  font-size: 40px;
+  font-weight: normal;
+  text-align: left;
+  margin-left:0px;
+  background-color: #2160b2;
+}
+
+.basic {
+  padding: 10px;
+}

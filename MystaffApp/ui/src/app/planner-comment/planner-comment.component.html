@@ -1,0 +1,7 @@
+<div class="container">
+  <div class="title">
+    {{_translate.instant('COMMENT')}}
+  </div>
+  <p class="warning"  *ngIf="amount >= 10" >{{_translate.instant('PLANNER_COMMENT_WARNING')}}</p>
+  <input (ngModelChange)="dataChanged($event)" ngModel placeholder="{{_translate.instant('PLANNER_COMMENT_OPTIONAL')}}"/>
+</div>

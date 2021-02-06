@@ -1,0 +1,84 @@
+.name{
+  text-align: center;
+  padding-bottom: 8px;
+}
+
+.name_bottom{
+  text-align: center;
+}
+
+.spacing-bewaar {
+  color: #2160b2;
+}
+
+input[type=submit] {
+  color: #2160b2;
+  background:white;
+  cursor:pointer;
+  -webkit-border-radius: 5px;
+  outline:none;
+}
+
+.items {
+  display: inline-block;
+  margin-right: .1rem;
+  padding-left: .1rem;
+  cursor:pointer;
+  outline: none;
+}
+.options{
+  cursor: pointer;
+}
+
+mat-icon {
+  vertical-align: -5px;
+  padding-right: .5rem;
+  color: #2160b2;
+}
+
+.space{
+  cursor: pointer;
+  padding-right: 1rem;
+  position: static;
+  float: right;
+}
+
+.circle{
+  position: static;
+  float: left;
+  border-radius: 50%;
+  border: 1px solid #2160b2;
+  width: 25px;
+  height: 25px;
+}
+
+.no-space{
+  position: static;
+  float: left;
+}
+
+.blue{
+  color: #2160b2;
+}
+
+.moveUp{
+  vertical-align: -5px;
+}
+
+hr{
+  padding: 0.1rem;
+  margin: 0.1rem;
+}
+
+
+.floating {
+  position: absolute;
+  left: 45%;
+  background:white;
+  border: 1px solid #2160b2;
+  border-radius: 5px;
+  padding-right: 2%;
+  visibility: hidden;
+  z-index: 1;
+  transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+}

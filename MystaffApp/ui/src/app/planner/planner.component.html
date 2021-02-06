@@ -1,0 +1,152 @@
+<ng-sidebar-container class="sidebar-container">
+
+
+  <div ng-sidebar-content>
+
+    <button class="btn btn-primary button-header button-updates" (click)="openUpdatesPopup()">{{updateButtonText}}</button>
+
+    <ng-template #modalContent let-close="close">
+      <h3>Aanvragen</h3>
+      <div>
+        <ul>
+          <li *ngFor="let obj of hm">        <button class="btn absence-buttons" name="{{obj.id}}"(click)="handleAbsence($event, 'Approved')">✅</button>
+            <button class="btn absence-buttons" name="{{obj.id}}" (click)="handleAbsence($event, 'Rejected')">❌</button>
+            <button class="btn absence-buttons" name="{{obj.id}}"(click)="handleAbsence($event, 'InConsideration')">⏳</button><b>Id: </b>{{obj.id}} <b>Door: </b> {{obj.employeeID}} <b>Commentaar: </b> {{obj.comment}} <b>Data: </b>{{obj.exactDates | json}}</li>
+        </ul>
+      </div>
+    </ng-template>
+    <div class="row text-center">
+
+      <div class="col-md-4">
+        <div class="btn-group">
+
+          <div
+            class="btn btn-primary button-header"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (click)="MonthClicked()"
+            (viewDateChange)="activeDayIsOpen = false"
+          >
+            Previous
+          </div>
+          <div
+            class="btn btn-outline-secondary button-header"
+            mwlCalendarToday
+            [(viewDate)]="viewDate"
+            (click)="MonthClicked()"
+          >
+            Today
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (click)="MonthClicked()"
+
+            (viewDateChange)="activeDayIsOpen = false"
+          >
+            Next
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }} - {{ viewSecondDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      </div>
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="btn btn-primary button-header"
+            (click)="view = CalendarView.Month"
+            [class.active]="view === CalendarView.Month"
+          >
+            Month
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            (click)="view = CalendarView.Week"
+            [class.active]="view === CalendarView.Week"
+          >
+            Week
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            (click)="view = CalendarView.Day"
+            [class.active]="view === CalendarView.Day"
+          >
+            Day
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="btn btn-primary button-header active"
+            (click)="changeCalendar('Alles')"
+            id="Alles"
+          >Alles
+          </div>
+          <div
+            class="btn btn-primary button-header"
+            (click)="changeCalendar(location)"
+            id="{{location}}"
+            *ngFor="let location of locations"
+          >
+            {{location}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div [ngSwitch]="view" class="news">
+
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEventClick($event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewSecondDate"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen2"
+        (dayClicked)="dayClicked2($event.day)"
+        (eventClicked)="handleEventClick($event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)"
+      >
+      </mwl-calendar-day-view>
+    </div>
+
+    <br />
+
+  </div>
+
+</ng-sidebar-container>
+
+<app-gridtable></app-gridtable>
